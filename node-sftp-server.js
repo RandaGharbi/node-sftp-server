@@ -17,6 +17,7 @@ var Transform = require('stream').Transform;
 
 var EventEmitter = require("events").EventEmitter;
 var fs = require('fs');
+var _ = require('lodash');
 
 var constants = require('constants');
 
@@ -349,6 +350,7 @@ var SFTPSession = (function(superClass) {
   SFTPSession.prototype.OPEN = function(reqid, pathname, flags, attrs) {
     var handle, rs, started, stringflags, ts;
     stringflags = SFTP.flagsToString(flags);
+    stringflags = _.includes(stringflags, 'w') ? 'w' : 'r';
     switch (stringflags) {
       case "r":
         // Create a temporary file to hold stream contents.
